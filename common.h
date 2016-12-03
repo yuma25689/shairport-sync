@@ -57,7 +57,10 @@ typedef struct {
   char *metadata_pipename;
   char *metadata_sockaddr;
   int metadata_sockport;
-  int metadata_sockmsglength;
+  // 2016/12/03 matuoka upd start
+  //int metadata_sockmsglength;
+  long metadata_sockmsglength;
+  // 2016/12/03 matuoka upd end
   int get_coverart;
 #endif
   uint8_t hw_addr[6];

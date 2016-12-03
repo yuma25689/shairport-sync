@@ -490,7 +490,12 @@ int parse_options(int argc, char **argv) {
       }
       config.metadata_sockmsglength = 500;
       if (config_lookup_int(config.cfg, "metadata.socket_msglength", &value)) {
-        config.metadata_sockmsglength = value < 500 ? 500 : value > 65000 ? 65000 : value;
+        // 2016/12/03 matuoka upd start
+        // maybe still not enouph
+        // maybe best practice is dividing the message
+        //config.metadata_sockmsglength = value < 500 ? 500 : value > 65000 ? 65000 : value;
+        config.metadata_sockmsglength = value < 500 ? 500 : value > 1000000 ? 1000000 : value;
+        // 2016/12/03 matuoka upd end
       }
 
   #endif
@@ -1033,7 +1038,10 @@ int main(int argc, char **argv) {
   debug(1, "metdata enabled is %d.", config.metadata_enabled);
   debug(1, "metadata pipename is \"%s\".", config.metadata_pipename);
   debug(1, "metadata socket address is \"%s\" port %d.", config.metadata_sockaddr, config.metadata_sockport);
-  debug(1, "metadata socket packet size is \"%d\".", config.metadata_sockmsglength);
+  // 2016/12/03 matuoka upd start
+  //debug(1, "metadata socket packet size is \"%d\".", config.metadata_sockmsglength);
+  debug(1, "metadata socket packet size is \"%ld\".", config.metadata_sockmsglength);
+  // 2016/12/03 matuoka upd end
   debug(1, "get-coverart is %d.", config.get_coverart);
 #endif
 
