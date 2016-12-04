@@ -608,7 +608,7 @@ int parse_options(int argc, char **argv) {
   if ((config.metadata_enabled == 1) && (config.metadata_pipename == NULL))
     config.metadata_pipename=strdup("/tmp/shairport-sync-metadata");
   // 2016/12/03 matuoka add start
-  if ((config.metadata_enabled == 1) && (config.metadata_pipename == NULL))
+  if ((config.metadata_enabled == 1) && (config.coverart_dir == NULL))
     config.coverart_dir=strdup("/mnt/INTERNAL/airplay");
   // 2016/12/03 matuoka add end
 #endif
