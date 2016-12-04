@@ -1380,8 +1380,8 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
         }
         else
         {
-          debug(1, "write file:%s contentlength:%ld\n", path, req->contentlength);
-          write(fdImage, req->content, req->contentlength);
+          long byteWritten = write(fdImage, req->content, req->contentlength);
+          debug(1, "write file:%s contentlength:%ld actually write:%ld\n", path, req->contentlength, byteWritten );
           close(fdImage);
         }
         // 2016/12/03 matuoka add end
