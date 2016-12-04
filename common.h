@@ -59,6 +59,7 @@ typedef struct {
   int metadata_sockport;
   int metadata_sockmsglength;
   int get_coverart;
+  char *coverart_dir; // 2016/12/03 matuoka add
 #endif
   uint8_t hw_addr[6];
   int port;
