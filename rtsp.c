@@ -1357,7 +1357,36 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
           send_metadata('ssnc', 'pcst', NULL, 0, NULL,
                         0); // picture starting, if rtptime is not available
 
-        send_metadata('ssnc', 'PICT', req->content, req->contentlength, req, 1);
+        // 2016/12/03 matuoka add start
+        size_t dirLen = strlen(config.coverart_dir);
+
+        char ext[5] = ".png";
+        if( req->content[0] == 0xFF && req->content[1] == 0xD8 && req->content[2] == 0xFF )
+        {
+            char ext[5] = ".jpg";
+        }
+
+        size_t fileNameLen = strlen("/cover");
+        size_t extLen = strlen(ext);
+
+        char *path = malloc(dirLen+fileNameLen+extLen + 2);
+        snprintf(path, dirLen+fileNameLen+extLen + 1, "%s%s%s", config.coverart_dir, "/cover", ext );
+
+        int fdImage;
+        fdImage = open(path, O_CREAT|O_WRONLY|O_TRUNC);
+        if (fdImage == -1) {
+          debug(1, "Can not open file:%s\n", path);
+        }
+        else
+        {
+          write(fdImage, req->content, req->contentlength);
+          close(fdImage);
+        }
+        // 2016/12/03 matuoka add end
+
+        // 2016/12/03 matuoka update
+        // dont send image
+        send_metadata('ssnc', 'PICT', path, strlen(path + 1), req, 1 );//req->content, req->contentlength, req, 1);
 
         if (p)
           send_metadata('ssnc', 'pcen', p + 1, strlen(p + 1), req,

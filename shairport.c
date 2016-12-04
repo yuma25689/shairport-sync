@@ -229,6 +229,7 @@ void usage(char *progname) {
          "--metadata-pipename=/tmp/shairport-sync-metadata.\n");
   printf("                            The default is /tmp/shairport-sync-metadata.\n");
   printf("    --get-coverart          send cover art through the metadata pipe.\n");
+  printf("    --coverart-dir          The default is /mnt/INTERNAL/airplay.\n");  // 2016/12/03 matuoka add
 #endif
   printf("\n");
   mdns_ls_backends();
@@ -271,6 +272,7 @@ int parse_options(int argc, char **argv) {
 #ifdef CONFIG_METADATA
       {"metadata-pipename", 'M', POPT_ARG_STRING, &config.metadata_pipename, 'M', NULL},
       {"get-coverart", 'g', POPT_ARG_NONE, &config.get_coverart, 'g', NULL},
+      {"coverart-dir", 'g', POPT_ARG_STRING, &config.coverart_dir, 'M', NULL},  // 2016/12/03 matuoka add
 #endif
       POPT_AUTOHELP
       {NULL, 0, 0, NULL, 0}};
@@ -482,6 +484,12 @@ int parse_options(int argc, char **argv) {
         config.metadata_pipename = (char *)str;
       }
 
+      // 2016/12/03 matuoka add start
+      if (config_lookup_string(config.cfg, "metadata.coverart_dir", &str)) {
+        config.coverart_dir = (char *)str;
+      }
+      // 2016/12/03 matuoka add end
+
       if (config_lookup_string(config.cfg, "metadata.socket_address", &str)) {
         config.metadata_sockaddr = (char *)str;
       }
@@ -599,6 +607,10 @@ int parse_options(int argc, char **argv) {
 #ifdef CONFIG_METADATA
   if ((config.metadata_enabled == 1) && (config.metadata_pipename == NULL))
     config.metadata_pipename=strdup("/tmp/shairport-sync-metadata");
+  // 2016/12/03 matuoka add start
+  if ((config.metadata_enabled == 1) && (config.metadata_pipename == NULL))
+    config.coverart_dir=strdup("/mnt/INTERNAL/airplay");
+  // 2016/12/03 matuoka add end
 #endif
 
 /* if the regtype hasn't been set, do it now */
@@ -1035,6 +1047,7 @@ int main(int argc, char **argv) {
   debug(1, "metadata socket address is \"%s\" port %d.", config.metadata_sockaddr, config.metadata_sockport);
   debug(1, "metadata socket packet size is \"%d\".", config.metadata_sockmsglength);
   debug(1, "get-coverart is %d.", config.get_coverart);
+  debug(1, "coverart dir is \"%s\".", config.coverart_dir); // 2016/12/03 matuoka add
 #endif
 
   uint8_t ap_md5[16];
