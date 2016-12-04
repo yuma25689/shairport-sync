@@ -1358,6 +1358,7 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
                         0); // picture starting, if rtptime is not available
 
         // 2016/12/03 matuoka add start
+        debug(1, "coverart_dir:%s\n", config.coverart_dir);
         size_t dirLen = strlen(config.coverart_dir);
 
         char ext[5] = ".png";
