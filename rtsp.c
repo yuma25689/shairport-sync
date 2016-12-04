@@ -1374,9 +1374,7 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
         snprintf(path, dirLen+fileNameLen+extLen + 1, "%s%s%s", config.coverart_dir, "/cover", ext );
 
         int fdImage;
-        fdImage = open(path, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR |    /* rwx */
-                S_IRGRP               /* r-- */
-                S_IROTH );            /* r-- */
+        fdImage = open(path, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR|S_IWUSR|S_IXUSR| S_IRGRP | S_IROTH );
         if (fdImage == -1) {
           debug(1, "Can not open file:%s\n", path);
         }
