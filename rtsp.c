@@ -1374,7 +1374,7 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
         snprintf(path, dirLen+fileNameLen+extLen + 1, "%s%s%s", config.coverart_dir, "/cover", ext );
 
         int fdImage;
-        fdImage = open(path, O_CREAT|O_WRONLY|O_TRUNC|S_IXGRP|S_IRWXG|S_IRWXU);
+        fdImage = open(path, O_CREAT|O_WRONLY|O_TRUNC, S_IXGRP|S_IRWXG|S_IRWXU);
         if (fdImage == -1) {
           debug(1, "Can not open file:%s\n", path);
         }
@@ -1388,7 +1388,7 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
 
         // 2016/12/03 matuoka update
         // dont send image
-        send_metadata('ssnc', 'PICT', path, strlen(path + 1), req, 1 );//req->content, req->contentlength, req, 1);
+        send_metadata('ssnc', 'PICT', path, strlen(path), req, 1 );//req->content, req->contentlength, req, 1);
 
         if (p)
           send_metadata('ssnc', 'pcen', p + 1, strlen(p + 1), req,
