@@ -1380,6 +1380,7 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
         }
         else
         {
+          debug(1, "write picture req->contentlength:%ld\n", req->contentlength);
           write(fdImage, req->content, req->contentlength);
           close(fdImage);
         }
