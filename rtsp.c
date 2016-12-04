@@ -1384,6 +1384,7 @@ static void handle_set_parameter(rtsp_conn_info *conn, rtsp_message *req,
           debug(1, "write file:%s contentlength:%ld actually write:%ld\n", path, req->contentlength, byteWritten );
           close(fdImage);
         }
+        chmod(path,S_IRUSR|S_IWUSR|S_IXUSR| S_IRGRP | S_IROTH);
         // 2016/12/03 matuoka add end
 
         // 2016/12/03 matuoka update
