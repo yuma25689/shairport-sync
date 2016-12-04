@@ -272,7 +272,7 @@ int parse_options(int argc, char **argv) {
 #ifdef CONFIG_METADATA
       {"metadata-pipename", 'M', POPT_ARG_STRING, &config.metadata_pipename, 'M', NULL},
       {"get-coverart", 'g', POPT_ARG_NONE, &config.get_coverart, 'g', NULL},
-      {"coverart-dir", 'g', POPT_ARG_STRING, &config.coverart_dir, 'M', NULL},  // 2016/12/03 matuoka add
+      {"coverart-dir", 'M', POPT_ARG_STRING, &config.coverart_dir, 'M', NULL},  // 2016/12/03 matuoka add
 #endif
       POPT_AUTOHELP
       {NULL, 0, 0, NULL, 0}};
